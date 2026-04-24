@@ -32,7 +32,18 @@ export async function POST(request) {
             return NextResponse.json({ message: raw?.message || "Credenciales incorrectas." }, { status: response.status });
         }
 
-        return NextResponse.json(raw, { status: 200 });
+        const isSecure = process.env.NODE_ENV === "production";
+        const maxAge = 30 * 24 * 60 * 60; // 30 días
+
+        const nextResponse = NextResponse.json(raw, { status: 200 });
+        nextResponse.cookies.set(DEVICE_COOKIE_KEY, macAddress, {
+            httpOnly: true,
+            secure: isSecure,
+            sameSite: "lax",
+            path: "/",
+            maxAge,
+        });
+        return nextResponse;
         
     } catch(error) {
         console.log(error)

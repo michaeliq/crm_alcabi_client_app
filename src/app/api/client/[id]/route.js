@@ -3,8 +3,9 @@ import { backendFetch } from "@/lib/backendFetch";
 
 export async function GET(request, { params }) {
     try {
+        console.log("gato")
         const { id } = await params;
-        const response = await backendFetch(`/client/${id}`);
+        const response = await backendFetch(`/user?email=${id}`);
         const raw = await response.json();
         return NextResponse.json(raw, { status: response.status });
     } catch {

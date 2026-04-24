@@ -50,6 +50,7 @@ export default function PerfilPage() {
             .then((r) => r.json())
             .then((raw) => {
                 const data = Array.isArray(raw?.data) ? raw.data[0] : raw?.data;
+                console.log(raw)
                 if (data) { setClient(data); setForm(data); }
                 else setError("No se encontró información de tu perfil.");
             })

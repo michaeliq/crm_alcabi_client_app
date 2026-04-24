@@ -83,7 +83,7 @@ export default function ContratoDetallePage() {
                                         )}
                                     </div>
                                 </div>
-                                <StatusBadge estado={contract?.estado} />
+                                <StatusBadge estado={contract?.contract_state?.nombre} />
                             </div>
                         </div>
 
@@ -91,12 +91,12 @@ export default function ContratoDetallePage() {
                         <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
                             <h2 className="text-sm font-semibold text-gray-700 mb-2">Información del contrato</h2>
                             <InfoRow label="CUPS" value={contract?.cups} icon={Zap} />
-                            <InfoRow label="Dirección de suministro" value={contract?.direccion} icon={Home} />
+                            <InfoRow label="Dirección de suministro" value={contract?.direccion_suministro} icon={Home} />
                             <InfoRow label="Fecha de inicio" value={contract?.fecha_inicio ? new Date(contract.fecha_inicio).toLocaleDateString("es-ES") : null} icon={Calendar} />
                             <InfoRow label="Fecha de fin" value={contract?.fecha_fin ? new Date(contract.fecha_fin).toLocaleDateString("es-ES") : null} icon={Calendar} />
                             <InfoRow label="Potencia contratada" value={contract?.potencia ? `${contract.potencia} kW` : null} />
-                            <InfoRow label="Tarifa" value={contract?.tarifa} />
-                            <InfoRow label="Comercializadora" value={contract?.comercializadora} />
+                            <InfoRow label="Tarifa" value={contract?.product?.nombre} />
+                            <InfoRow label="Comercializadora" value={contract?.provider?.razon_social} />
                             {contract?.observaciones && (
                                 <div className="pt-3 mt-1">
                                     <p className="text-xs text-gray-500 mb-1">Observaciones</p>
