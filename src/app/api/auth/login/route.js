@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { DEVICE_COOKIE_KEY, resolveDeviceMacAddress } from "@/lib/deviceIdentity";
+import { resolveSecureCookies } from "@/lib/session";
 
 export async function POST(request) {
     try {
@@ -32,7 +33,7 @@ export async function POST(request) {
             return NextResponse.json({ message: raw?.message || "Credenciales incorrectas." }, { status: response.status });
         }
 
-        const isSecure = process.env.NODE_ENV === "production";
+        const isSecure = resolveSecureCookies();
         const maxAge = 30 * 24 * 60 * 60; // 30 días
 
         const nextResponse = NextResponse.json(raw, { status: 200 });

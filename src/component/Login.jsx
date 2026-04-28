@@ -131,7 +131,6 @@ export default function Login() {
                     <button
                         type="submit"
                         disabled={submitting}
-                        onClick={handleSubmit}
                         className="w-full flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-700 disabled:bg-indigo-400 text-white font-medium rounded-lg py-2.5 text-sm transition-colors"
                     >
                         {submitting ? (
