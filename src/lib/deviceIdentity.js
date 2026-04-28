@@ -1,6 +1,6 @@
 export const DEVICE_COOKIE_KEY = "device_fingerprint";
 
-export const resolveDeviceMacAddress = (request) => {
+export const resolveDeviceMacAddress = async (request) => {
     const fromHeader = request.headers.get("x-mac-address") || request.headers.get("mac-address");
     if (fromHeader && String(fromHeader).trim()) {
         return String(fromHeader).trim().toLowerCase();
