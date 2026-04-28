@@ -1,7 +1,7 @@
 "use server"
 import { cookies } from 'next/headers'
 
-const resolveSecureCookies = () => {
+const resolveSecureCookies = async () => {
     if (process.env.COOKIE_SECURE === "true") return true;
     if (process.env.COOKIE_SECURE === "false") return false;
     return process.env.NODE_ENV === "production";
