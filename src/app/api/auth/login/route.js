@@ -33,7 +33,7 @@ export async function POST(request) {
             return NextResponse.json({ message: raw?.message || "Credenciales incorrectas." }, { status: response.status });
         }
 
-        const isSecure = resolveSecureCookies();
+        const isSecure = await resolveSecureCookies();
         const maxAge = 30 * 24 * 60 * 60; // 30 días
 
         const nextResponse = NextResponse.json(raw, { status: 200 });

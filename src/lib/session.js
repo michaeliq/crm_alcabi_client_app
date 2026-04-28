@@ -12,7 +12,7 @@ export { resolveSecureCookies };
 export async function createSession(data) {
     const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
     const cookieStore = await cookies()
-    const secureCookies = resolveSecureCookies()
+    const secureCookies = await resolveSecureCookies()
 
     cookieStore.set('session-Alcabi-client', data, {
         httpOnly: true,
@@ -26,7 +26,7 @@ export async function createSession(data) {
 export async function createCustomCookie(name, data) {
     const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
     const cookieStore = await cookies()
-    const secureCookies = resolveSecureCookies()
+    const secureCookies = await resolveSecureCookies()
 
     cookieStore.set(name, data, {
         httpOnly: false,
