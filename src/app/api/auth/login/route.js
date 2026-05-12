@@ -5,15 +5,14 @@ import { resolveSecureCookies } from "@/lib/session";
 export async function POST(request) {
     try {
         const body = await request.json();
-        const { email, password } = body;
-        const macAddress = resolveDeviceMacAddress(request);
+        const { email, password, keepSession } = body;
+        const macAddress = await resolveDeviceMacAddress(request);
 
-        if (!email || !password) {
-            return NextResponse.json({ message: "Correo y contraseña son requeridos." }, { status: 400 });
+        if (!email) {
+            return NextResponse.json({ message: "Correo requerido" }, { status: 400 });
         }
 
         const backUrl = process.env.BACK_URL;
-        console.log(backUrl)
         if (!backUrl) {
             return NextResponse.json({ message: "Configuración del servidor incompleta." }, { status: 500 });
         }
@@ -24,7 +23,7 @@ export async function POST(request) {
                 "Content-Type": "application/json" ,
                 "x-mac-address": macAddress
             },
-            body: JSON.stringify({ email, password }),
+            body: JSON.stringify({ email, password, keep_session: keepSession, mac_address: macAddress }),
         });
 
         const raw = await response.json();
@@ -36,7 +35,7 @@ export async function POST(request) {
         const isSecure = await resolveSecureCookies();
         const maxAge = 30 * 24 * 60 * 60; // 30 días
 
-        const nextResponse = NextResponse.json(raw, { status: 200 });
+        const nextResponse = NextResponse.json(raw, { status: response.status });
         nextResponse.cookies.set(DEVICE_COOKIE_KEY, macAddress, {
             httpOnly: true,
             secure: isSecure,

@@ -7,7 +7,12 @@ export async function middleware(request) {
     const user = request.cookies.get("user_alcabi_client")?.value;
 
     // Rutas públicas que no requieren autenticación
-    if (pathname === "/" || pathname.startsWith("/api/auth")) {
+    if (
+        pathname === "/" ||
+        pathname.startsWith("/registro") ||
+        pathname.startsWith("/api/auth") ||
+        pathname.startsWith("/api/public-registration")
+    ) {
         // Si ya tiene sesión y va al login, redirigir al dashboard
         if ((pathname === "/") && session && user) {
             return NextResponse.redirect(new URL("/dashboard", request.url));
